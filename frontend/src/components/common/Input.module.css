@@ -1,0 +1,30 @@
+.group { display: flex; flex-direction: column; gap: 0.4rem; }
+
+.label { font-size: 0.85rem; font-weight: 500; color: var(--text-secondary); }
+
+.req { color: var(--danger); margin-left: 2px; }
+
+.input {
+  width: 100%;
+  padding: 0.65rem 1rem;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.input::placeholder { color: var(--text-muted); }
+
+.input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(108,99,255,0.15);
+}
+
+.input:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.inputError { border-color: var(--danger); }
+.inputError:focus { box-shadow: 0 0 0 3px rgba(229,62,62,0.15); }
+
+.error { font-size: 0.78rem; color: var(--danger); }

@@ -1,0 +1,66 @@
+.uploadCard { margin-bottom: 2rem; }
+
+.uploadTitle { font-size: 1rem; font-weight: 600; margin-bottom: 1rem; }
+
+.uploadForm { display: flex; flex-direction: column; gap: 0.9rem; }
+
+.fileZone {
+  border: 2px dashed var(--border);
+  border-radius: var(--radius-md);
+  padding: 2rem;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color var(--transition), background var(--transition);
+}
+
+.fileZone:hover {
+  border-color: var(--primary);
+  background: rgba(108,99,255,0.04);
+}
+
+.fileIcon { font-size: 2rem; display: block; margin-bottom: 0.5rem; }
+
+.fileZone p { font-size: 0.88rem; color: var(--text-secondary); }
+
+.fileTypes { font-size: 0.75rem !important; color: var(--text-muted) !important; margin-top: 0.25rem; }
+
+.fileInput { display: none; }
+
+.topicInput {
+  padding: 0.65rem 1rem;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-size: 0.88rem;
+}
+
+.topicInput::placeholder { color: var(--text-muted); }
+.topicInput:focus { border-color: var(--primary); outline: none; }
+
+.listHeader { margin-bottom: 1rem; }
+.listHeader h3 { font-size: 1rem; font-weight: 600; color: var(--text-secondary); }
+
+.center { display: flex; justify-content: center; padding: 3rem; }
+
+.noteGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.25rem;
+}
+
+.noteCard { display: flex; flex-direction: column; gap: 0.5rem; }
+
+.noteTop { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+
+.noteName {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  word-break: break-word;
+  flex: 1;
+}
+
+.noteMeta { font-size: 0.75rem; color: var(--text-muted); }
+
+.noteActions { margin-top: 0.5rem; display: flex; gap: 0.5rem; }

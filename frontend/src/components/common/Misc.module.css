@@ -1,0 +1,84 @@
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+}
+
+/* Spinner */
+.spinner {
+  border-radius: 50%;
+  border-style: solid;
+  border-color: var(--border) var(--border) var(--border) var(--primary);
+  animation: spin 0.7s linear infinite;
+}
+.sm  { width: 20px; height: 20px; border-width: 2px; }
+.md  { width: 36px; height: 36px; border-width: 3px; }
+.lg  { width: 56px; height: 56px; border-width: 4px; }
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Badge */
+.badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+.default  { background: var(--bg-elevated); color: var(--text-secondary); }
+.success  { background: rgba(56,161,105,0.15); color: var(--success); }
+.danger   { background: rgba(229,62,62,0.15);  color: var(--danger); }
+.warning  { background: rgba(246,173,85,0.15); color: var(--warning); }
+.primary  { background: var(--primary-light);  color: var(--primary); }
+
+/* Page header */
+.pageHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.pageTitle {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.pageSub {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-top: 0.25rem;
+}
+
+/* Empty state */
+.empty {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--text-secondary);
+}
+.emptyIcon { font-size: 2.5rem; display: block; margin-bottom: 1rem; }
+.empty h3  { font-size: 1rem; margin-bottom: 0.4rem; color: var(--text-primary); }
+.empty p   { font-size: 0.85rem; }
+
+/* Alert */
+.alert {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-md);
+  font-size: 0.88rem;
+  margin-bottom: 1rem;
+}
+.error   { background: rgba(229,62,62,0.12);   border: 1px solid rgba(229,62,62,0.3);   color: #fc8181; }
+.success { background: rgba(56,161,105,0.12);  border: 1px solid rgba(56,161,105,0.3);  color: #68d391; }
+.info    { background: rgba(108,99,255,0.12);  border: 1px solid rgba(108,99,255,0.3);  color: #a78bfa; }
+
+.alertClose {
+  background: none; border: none;
+  color: inherit; font-size: 0.8rem; cursor: pointer; opacity: 0.7;
+}
+.alertClose:hover { opacity: 1; }
