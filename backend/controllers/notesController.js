@@ -1,6 +1,7 @@
 const path = require('path');
 const { sql, getPool } = require('../config/db');
 const extractionService = require('../services/summary/extractionService');
+const summaryService = require('../services/summary/summaryService');
 
 // POST /notes/upload
 const uploadNote = async (req, res, next) => {
@@ -14,8 +15,18 @@ const uploadNote = async (req, res, next) => {
     const { originalname, filename, path: filePath, size, mimetype } = req.file;
     const fileExt = path.extname(originalname).toLowerCase().replace('.', '');
 
-    // Placeholder extraction — real impl in services/summary/extractionService.js
+    // Extract text from uploaded file
     const extracted_text = await extractionService.extract(filePath, fileExt);
+
+    // Generate AI summary if text was extracted and Gemini API key is configured
+    let summary = null;
+    if (extracted_text && process.env.GEMINI_API_KEY) {
+      try {
+        summary = await summaryService.summarize(extracted_text, { topic });
+      } catch (err) {
+        console.error('[Notes] Summary generation failed:', err.message);
+      }
+    }
 
     const pool = await getPool();
 
@@ -27,10 +38,11 @@ const uploadNote = async (req, res, next) => {
       .input('upload_path',   sql.NVarChar,  filePath)
       .input('extracted_text',sql.NVarChar,  extracted_text)
       .input('topic',         sql.NVarChar,  topic || null)
+      .input('summary',       sql.NVarChar,  summary ? JSON.stringify(summary) : null)
       .query(`
-        INSERT INTO notes (user_id, file_name, file_type, file_size, upload_path, extracted_text, topic)
+        INSERT INTO notes (user_id, file_name, file_type, file_size, upload_path, extracted_text, topic, summary)
         OUTPUT INSERTED.*
-        VALUES (@user_id, @file_name, @file_type, @file_size, @upload_path, @extracted_text, @topic)
+        VALUES (@user_id, @file_name, @file_type, @file_size, @upload_path, @extracted_text, @topic, @summary)
       `);
 
     res.status(201).json({ success: true, message: 'Note uploaded.', data: result.recordset[0] });

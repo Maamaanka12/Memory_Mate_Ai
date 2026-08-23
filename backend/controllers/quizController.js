@@ -47,10 +47,11 @@ const generateQuiz = async (req, res, next) => {
 
     const quiz = quizResult.recordset[0];
 
-    // Insert questions
+    // Insert questions and capture DB-assigned IDs
+    const insertedQuestions = [];
     for (let i = 0; i < questions.length; i++) {
       const q = questions[i];
-      await pool.request()
+      const qResult = await pool.request()
         .input('quiz_id',       sql.Int,      quiz.id)
         .input('question_text', sql.NVarChar, q.question_text)
         .input('question_type', sql.NVarChar, q.question_type)
@@ -60,11 +61,21 @@ const generateQuiz = async (req, res, next) => {
         .input('order_index',   sql.Int,      i)
         .query(`
           INSERT INTO quiz_questions (quiz_id, question_text, question_type, options, correct_answer, explanation, order_index)
+          OUTPUT INSERTED.*
           VALUES (@quiz_id, @question_text, @question_type, @options, @correct_answer, @explanation, @order_index)
         `);
+      const inserted = qResult.recordset[0];
+      insertedQuestions.push({
+        id: inserted.id,
+        question_text: q.question_text,
+        question_type: q.question_type,
+        options: q.options,
+        correct_answer: q.correct_answer,
+        explanation: q.explanation || null,
+      });
     }
 
-    res.status(201).json({ success: true, message: 'Quiz generated.', data: { quiz, questions } });
+    res.status(201).json({ success: true, message: 'Quiz generated.', data: { quiz, questions: insertedQuestions } });
   } catch (err) {
     next(err);
   }
